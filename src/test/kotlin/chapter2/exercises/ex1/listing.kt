@@ -3,18 +3,20 @@ package chapter2.exercises.ex1
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
 import kotlinx.collections.immutable.persistentMapOf
-import utils.SOLUTION_HERE
 
 //TODO: Enable tests by removing `!` prefix
 class Exercise1 : WordSpec({
     //tag::init[]
-    fun fib(i: Int): Int =
+    fun fib(i: Int): Int {
+        tailrec fun loop(acc: Int, prev: Int, x: Int): Int =
+            if (x <= 1) acc else loop(acc + prev, acc, x - 1)
 
-        SOLUTION_HERE()
+        return loop(acc = 1, prev = 0, x = i)
+    }
     //end::init[]
 
     "fib" should {
-        "!return the nth fibonacci number" {
+        "return the nth fibonacci number" {
             persistentMapOf(
                 1 to 1,
                 2 to 1,
