@@ -8,15 +8,20 @@ import io.kotlintest.specs.WordSpec
 import utils.SOLUTION_HERE
 
 // tag::init[]
-fun <A> size(tree: Tree<A>): Int =
+fun <A> size(tree: Tree<A>): Int {
+    fun go(acc: Int, tree: Tree<A>): Int = when(tree){
+        is Leaf -> acc + 1
+        is Branch -> 1 + go(acc, tree.left) + go(acc, tree.right)
+    }
 
-    SOLUTION_HERE()
+    return go(0, tree)
+}
 // end::init[]
 
 //TODO: Enable tests by removing `!` prefix
 class Exercise24 : WordSpec({
     "tree size" should {
-        "!determine the total size of a tree" {
+        "determine the total size of a tree" {
             val tree =
                 Branch(
                     Branch(Leaf(1), Leaf(2)),
