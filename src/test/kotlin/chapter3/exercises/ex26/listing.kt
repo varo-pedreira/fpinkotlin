@@ -5,18 +5,21 @@ import chapter3.Leaf
 import chapter3.Tree
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
-import utils.SOLUTION_HERE
 
 // tag::init[]
-fun depth(tree: Tree<Int>): Int =
-
-    SOLUTION_HERE()
+fun depth(tree: Tree<Int>): Int {
+    fun go(tree: Tree<Int>, acc: Int): Int = when (tree) {
+        is Leaf -> acc
+        is Branch -> maxOf(go(tree.right, acc + 1), go(tree.left, acc + 1))
+    }
+    return go(tree, 0)
+}
 // end::init[]
 
 //TODO: Enable tests by removing `!` prefix
 class Exercise26 : WordSpec({
     "tree depth" should {
-        "!determine the maximum depth from the root to any leaf" {
+        "determine the maximum depth from the root to any leaf" {
             val tree = Branch( //0
                 Branch(Leaf(1), Leaf(2)), //2
                 Branch(
